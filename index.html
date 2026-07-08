@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio e Pedidos de Açaí</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 20px; color: #333; }
+        .container { max-width: 600px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); margin: auto; }
+        h2 { color: #4a148c; text-align: center; border-bottom: 2px solid #4a148c; padding-bottom: 10px; }
+        h3 { color: #6a1b9a; margin-top: 20px; margin-bottom: 5px; }
+        .obs { font-size: 12px; color: #666; font-style: italic; margin-bottom: 10px; display: block; }
+        label { font-weight: bold; margin-top: 15px; display: block; }
+        input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        .produto-opcional { background: #fff8e1; padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #ffb300; }
+        button { background-color: #25d366; color: white; padding: 14px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; margin-top: 20px; }
+        button:hover { background-color: #128c7e; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🍇 Monte seu Pedido de Açaí</h2>
+    <form id="formPedido">
+        
+        <h3>👤 Dados do Cliente</h3>
+        <label for="nome">Nome do Cliente:</label>
+        <input type="text" id="nome" required placeholder="Digite seu nome completo">
+
+        <label for="endereco">Endereço de Entrega:</label>
+        <textarea id="endereco" required placeholder="Rua, número, bairro e ponto de referência"></textarea>
+
+        <h3>📋 Escolha seu Açaí / Produto</h3>
+        <label for="sabor">Selecione uma opção do Cardápio:</label>
+        <select id="sabor" required onchange="verificarOpcoesAdicionais()">
+            <option value="">-- Escolha o sabor e tamanho --</option>
+            
+            <option value="Açaí de Frutas 330ml (R$ 13,00)">Açaí de Frutas 330ml - R$ 13,00 (Açaí, creme de ninho, leite em pó, farinha láctea, banana, uva, morango)</option>
+            <option value="Açaí de Frutas 400ml (R$ 16,00)">Açaí de Frutas 400ml - R$ 16,00</option>
+            <option value="Açaí de Frutas 500ml (R$ 19,00)">Açaí de Frutas 500ml - R$ 19,00</option>
+            
+            <option value="Trufado de Nutella 330ml (R$ 15,00)">Trufado de Nutella 330ml - R$ 15,00 (Açaí, chocoball, kit kat, leite em pó, ovomaltine, leite condensado, nutella)</option>
+            <option value="Trufado de Nutella 400ml (R$ 18,00)">Trufado de Nutella 400ml - R$ 18,00</option>
+            <option value="Trufado de Nutella 500ml (R$ 22,00)">Trufado de Nutella 500ml - R$ 22,00</option>
+            
+            <option value="Açaí de Paçoca 330ml (R$ 10,00)">Açaí de Paçoca 330ml - R$ 10,00 (Açaí, amendoim triturado, farinha láctea, leite em pó, leite condensado, paçoca)</option>
+            <option value="Açaí de Paçoca 400ml (R$ 15,00)">Açaí de Paçoca 400ml - R$ 15,00</option>
+            <option value="Açaí de Paçoca 500ml (R$ 17,00)">Açaí de Paçoca 500ml - R$ 17,00</option>
+            
+            <option value="Bananinha com Nutella 330ml (R$ 12,00)">Bananinha com Nutella 330ml - R$ 12,00 (Creme de banana com nutella, leite em pó, farinha láctea, gotas de chocolate, chocoball + 1 Cobertura)</option>
+            <option value="Bananinha com Nutella 400ml (R$ 15,00)">Bananinha com Nutella 400ml - R$ 15,00</option>
+            <option value="Bananinha com Nutella 500ml (R$ 17,00)">Bananinha com Nutella 500ml - R$ 17,00</option>
+            
+            <option value="Dois Amores 330ml (R$ 14,00)">Dois Amores 330ml - R$ 14,00 (Leite em pó, gotas de chocolate, açaí, morango, leite condensado, trufado com nutella e chocolate branco)</option>
+            <option value="Dois Amores 400ml (R$ 17,00)">Dois Amores 400ml - R$ 17,00</option>
+            <option value="Dois Amores 500ml (R$ 20,00)">Dois Amores 500ml - R$ 20,00</option>
+            
+            <option value="Trufado com Nutella e Ninho 330ml (R$ 15,00)">Trufado com Nutella e Ninho 330ml - R$ 15,00 (Creme ninho, chocoball, kit kat, leite em pó, ovomaltine, leite condensado, nutella)</option>
+            <option value="Trufado com Nutella e Ninho 400ml (R$ 18,00)">Trufado com Nutella e Ninho 400ml - R$ 18,00</option>
+            <option value="Trufado com Nutella e Ninho 500ml (R$ 22,00)">Trufado com Nutella e Ninho 500ml - R$ 22,00</option>
+            
+            <option value="Açaí Zero 330ml (R$ 12,00)">Açaí Zero 330ml - R$ 12,00 (Leite em pó, granola, amendoim, banana, morango, uva)</option>
+            <option value="Açaí Zero 400ml (R$ 15,00)">Açaí Zero 400ml - R$ 15,00</option>
+            <option value="Açaí Zero 500ml (R$ 17,00)">Açaí Zero 500ml - R$ 17,00</option>
+            
+            <option value="Ouro Branco 330ml (R$ 15,00)">Ouro Branco 330ml - R$ 15,00 (Creme de ninho, leite em pó, leite condensado, ouro branco, nutella, chocoball, ovomaltine)</option>
+            <option value="Ouro Branco 400ml (R$ 17,00)">Ouro Branco 400ml - R$ 17,00</option>
+            <option value="Ouro Branco 500ml (R$ 20,00)">Ouro Branco 500ml - R$ 20,00</option>
+            
+            <option value="Guloseimas 330ml (R$ 12,00)">Guloseimas 330ml - R$ 12,00 (Açaí, leite em pó, farinha láctea, M&M, calda de chocolate, sucrilhos, chocoball)</option>
+            <option value="Guloseimas 400ml (R$ 15,00)">Guloseimas 400ml - R$ 15,00</option>
+            <option value="Guloseimas 500ml (R$ 17,00)">Guloseimas 500ml - R$ 17,00</option>
+            
+            <option value="Batidinha de Açaí 330ml (R$ 10,00)">Batidinha de Açaí 330ml - R$ 10,00</option>
+            
+            <option value="Açaí Batido 330ml (R$ 8,00)">Açaí Batido 330ml - R$ 8,00</option>
+            <option value="Açaí Batido 400ml (R$ 13,00)">Açaí Batido 400ml - R$ 13,00</option>
+            <option value="Açaí Batido 500ml (R$ 15,00)">Açaí Batido 500ml - R$ 15,00</option>
+            
+            <option value="Trufado de Cookies 330ml (R$ 14,00)">Trufado de Cookies 330ml - R$ 14,00 (Açaí, leite em pó, morango, oreo, cookies, ovomaltine)</option>
+            <option value="Trufado de Cookies 400ml (R$ 17,00)">Trufado de Cookies 400ml - R$ 17,00</option>
+            <option value="Trufado de Cookies 500ml (R$ 20,00)">Trufado de Cookies 500ml - R$ 20,00</option>
+            
+            <option value="Sonho de Valsa 330ml (R$ 14,00)">Sonho de Valsa 330ml - R$ 14,00 (Creme de morango, leite em pó, gotas de chocolate, calda de morango, M&M, farinha láctea, sonho de valsa)</option>
+            <option value="Sonho de Valsa 400ml (R$ 16,00)">Sonho de Valsa 400ml - R$ 16,00</option>
+            <option value="Sonho de Valsa 500ml (R$ 18,00)">Sonho de Valsa 500ml - R$ 18,00</option>
+            
+            <option value="Ovomaltine 330ml (R$ 12,00)">Ovomaltine 330ml - R$ 12,00 (Chocoball, leite em pó, M&M, creme de ovomaltine, açaí, cobertura de chocolate)</option>
+            <option value="Ovomaltine 400ml (R$ 15,00)">Ovomaltine 400ml - R$ 15,00</option>
+            <option value="Ovomaltine 500ml (R$ 17,00)">Ovomaltine 500ml - R$ 17,00</option>
+            
+            <option value="Splash de Ninho 330ml (R$ 12,00)">Splash de Ninho 330ml - R$ 12,00 (Leite em pó, creme de ninho, leite condensado, açaí)</option>
+            <option value="Splash de Ninho 400ml (R$ 15,00)">Splash de Ninho 400ml - R$ 15,00</option>
+            <option value="Splash de Ninho 500ml (R$ 17,00)">Splash de Ninho 500ml - R$ 17,00</option>
+            
+            <option id="optSalada" value="Salada de Frutas Gourmet 300ml (R$ 10,00)">Salada de Frutas Gourmet 300ml - R$ 10,00</option>
+            <option id="optChurros" value="Mini Churros (R$ 10,00)">Mini Churros - R$ 10,00</option>
+            <option id="optSanduiche" value="Sanduíche Natural (R$ 8,00)">Sanduíche Natural - R$ 8,00</option>
+        </select>
+
+        <div id="secaoCoberturaBananinha" style="display: none; background: #f3e5f5; padding: 10px; border-radius: 4px; border-left: 4px solid #4a148c; margin-top: 10px;">
+            <label for="coberturaBananinha">Escolha apenas UMA cobertura:</label>
+            <select id="coberturaBananinha">
+                <option value="">-- Selecione a cobertura --</option>
+                <option value="Cobertura de Chocolate">Cobertura de Chocolate</option>
+                <option value="Leite Condensado">Leite Condensado</option>
+            </select>
+        </div>
+
+        <h3>🛵 Entrega e Pagamento</h3>
+        <label for="entrega">Bairro (Valor da Entrega):</label>
+        <select id="entrega" required>
+            <option value="">Selecione o local de entrega</option>
+            <option value="Centro (Entrega: R$ 5,00)">Centro - R$ 5,00</option>
+            <option value="Zona Norte (Entrega: R$ 7,00)">Zona Norte - R$ 7,00</option>
+            <option value="Zona Sul (Entrega: R$ 8,00)">Zona Sul - R$ 8,00</option>
+            <option value="Retirada no Balcão (Entrega: Grátis)">Retirar no Balcão - Grátis</option>
+        </select>
+
+        <label for="pagamento">Forma de Pagamento:</label>
+        <select id="pagamento" required>
+            <option value="">Escolha como quer pagar</option>
+            <option value="Pix">Pix</option>
+            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+        </select>
+
+        <button type="button" onclick="enviarWhatsApp()">🚀 Enviar Pedido via WhatsApp</button>
+    </form>
+</div>
+
+<script>
+// ==========================================
+// PAINEL DE CONTROLE DE DISPONIBILIDADE:
+// Altere para true (disponível) ou false (indisponível)
+// ==========================================
+const saladaDisponivel = true;   
+const churrosDisponivel = true;  
+const sanduicheDisponivel = true;
+// ==========================================
+
+// Função que roda assim que a página carrega para esconder/mostrar os itens sazonais
+function gerenciarItensDisponiveis() {
+    if (!saladaDisponivel) document.getElementById('optSalada').remove();
+    if (!churrosDisponivel) document.getElementById('optChurros').remove();
+    if (!sanduicheDisponivel) document.getElementById('optSanduiche').remove();
+}
+window.onload = gerenciarItensDisponiveis;
+
+// Mostra o campo de cobertura apenas se o cliente escolher "Bananinha com Nutella"
+function verificarOpcoesAdicionais() {
+    const saborSelecionado = document.getElementById('sabor').value;
+    const secaoBananinha = document.getElementById('secaoCoberturaBananinha');
+    
+    if (saborSelecionado.includes("Bananinha com Nutella")) {
+        secaoBananinha.style.display = "block";
+        document.getElementById('coberturaBananinha').required = true;
+    } else {
+        secaoBananinha.style.display = "none";
+        document.getElementById('coberturaBananinha').required = false;
+    }
+}
+
+function enviarWhatsApp() {
+    // INSIRA SEU WHATSAPP AQUI (Apenas números: Código do país 55 + DDD + Número)
+    const numeroTelefone = "5500999999999"; 
+
+    const nome = document.getElementById('nome').value;
+    const endereco = document.getElementById('endereco').value;
+    const sabor = document.getElementById('sabor').value;
+    const entrega = document.getElementById('entrega').value;
+    const pagamento = document.getElementById('pagamento').value;
+    
+    // Captura a cobertura se for o Bananinha
+    let detalheCobertura = "";
+    if (sabor.includes("Bananinha com Nutella")) {
+        const cobertura = document.getElementById('coberturaBananinha').value;
+        if(!cobertura) {
+            alert("Por favor, selecione a cobertura do seu Bananinha com Nutella.");
+            return;
+        }
+        detalheCobertura = `%0A*Cobertura Escolhida:* ${cobertura}`;
+    }
+
+    if (!nome || !endereco || !sabor || !entrega || !pagamento) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+    }
+
+    // Montando o texto para o Whats
+    const mensagem = `*Novo Pedido de Açaí* 🍇%0A%0A` +
+                     `*Cliente:* ${nome}%0A` +
+                     `*Endereço:* ${endereco}%0A` +
+                     `*Item Escolhido:* ${sabor}${detalheCobertura}%0A` +
+                     `*Taxa/Local:* ${entrega}%0A` +
+                     `*Forma de Pagamento:* ${pagamento}`;
+
+    const url = `https://api.whatsapp.com/send?phone=${5583994030301}&text=${mensagem}`;
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
